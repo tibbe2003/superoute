@@ -130,15 +130,13 @@ module.exports = class superroute_controller {
     }
 
     static async apigetAllStores(req, res) {
-        res.status(200).send(winkels);
-    }
-
-    static async apigetStoreById(req, res) {
         let id = req.params.id;
 
-        let result = winkels[id-1];
-
-        res.status(200).json(result);
+        if(id == undefined) {
+            return res.status(200).send(winkels);
+        } else {
+            return res.status(200).json(winkels[id-1]);
+        }
     }
 
     static async apigetStoreAssortiment(req, res) {
