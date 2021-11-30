@@ -12,9 +12,9 @@ const superroute = require("./controller");
     router.get("/losseProducten/:winkelId", superroute.losseProducten);
     router.get("/losseSchappen/:winkelId", superroute.losseSchappen);
     router.post("/koppelProduct/:winkelId", superroute.koppelProduct);
-
-    router.get("/allProducts", superroute.apigetAllProducts);
-    router.get("/productById/:id", superroute.apigetProductById);
-    router.put("/update/:id", superroute.apiupdateProductAantal);
+    router.delete("/koppelProduct/:winkelId/:schapId", superroute.ontkoppelProduct);
+    router.get("/product/:winkelId/:productId", superroute.getProductById);
+    router.put("/updateVoorraad/:winkelId/:productId", superroute.updateProductAantal);
+    router.get("/categorien", superroute.getCategories);
 
 module.exports = router;

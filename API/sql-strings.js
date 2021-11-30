@@ -62,5 +62,24 @@ module.exports = {
         return `UPDATE schap
                 SET productId = ${productId}
                 WHERE winkelId = ${winkelId} && schapId = ${schapId}`
-    }
+    },
+
+    ontkoppelProduct(winkelId, schapId) {
+        return `UPDATE schap
+                SET productId = null
+                WHERE winkelId = ${winkelId} && schapId = ${schapId}`
+    },
+
+    productDetails(winkelId, productId) {
+        return `SELECT * from product
+                WHERE productId = ${productId}`
+    },
+
+    updateVoorraad(winkelId, productId, aantal) {
+        return `UPDATE product
+                SET productAantal = '${aantal}'
+                WHERE productId = ${productId}`
+    },
+
+    getCategories: `SELECT * FROM categorien`,
 }

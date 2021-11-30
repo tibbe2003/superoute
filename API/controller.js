@@ -111,7 +111,7 @@ module.exports = class superroute_controller {
             if(err) {
                 return res.status(500).send({"error":"There was an unexpected error"});
             } else {
-                return res.status(200).send(result);
+                return res.status(200).json(result);
             }
         })
     }
@@ -128,55 +128,64 @@ module.exports = class superroute_controller {
                 console.log(err);
                 return res.status(500).send({"error":"Something went wrong"});
             } else {
-                return res.status(200).send(result);
+                return res.status(200).send({"succes":"product succesfully koppeld"});
             }
-        })
+        });
     }
 
-    static async apigetAllProducts(req, res) {
-        conn.query("SELECT * FROM voorraad", function (err, result) {
+    //product ontkoppelen
+    static async ontkoppelProduct(req, res) {
+        let winkelId = req.params.winkelId;
+        let schapId = req.params.schapId;
+
+        conn.query(sql.ontkoppelProduct(winkelId, schapId), function (err, result) {
             if(err) {
-                return res.status(500).send({"error":"There was an unexpected error"});
+                console.log(err);
+                return res.status(500).send({"error":"Something went wrong, please check your paramters"});
+            } else {
+                return res.status(200).send({"succes":"product succesfully ontkoppeld"});
+            }
+        });
+    }
+
+    //product details
+    static async getProductById(req, res) {
+        let winkelId = req.params.winkelId;
+        let productId = req.params.productId;
+
+        conn.query(sql.productDetails(winkelId, productId), function (err, result) {
+            if(err) {
+                console.log(err);
+                return res.status(500).json(err);
             } else {
                 return res.status(200).json(result);
             }
         });
     }
 
-    static async apigetProductById(req, res) {
-        let id = req.params.id;
-
-        conn.query("SELECT * FROM voorraad WHERE productId = ?", id, function (err, result) {
-            if(err) {
-                console.log({"error":err});
-                return res.status(404).json(err);
-            } else {
-                return res.status(200).json(result);
-            }
-        });
-    }
-
-    static async apiupdateProductAantal(req, res) {
-        let id = req.params.id;
+    static async updateProductAantal(req, res) {
+        let winkelId = req.params.winkelId;
+        let productId = req.params.productId;
         let aantal = req.body.aantal;
 
-        if(aantal == null) {
-            return err = ({"Error":"Please fill in all nesecery fields"});
-        } if(isNaN(aantal)) {
-            return err = ({"Error ":"Invalid amount filed in"});
-        }
-
-        conn.query("UPDATE voorraad SET productAantal = ? WHERE productId = ?", [aantal, id], function(err, result) {
+        conn.query(sql.updateVoorraad(winkelId, productId, aantal), function(err, result) {
             if(err) {
-                res.status(404).json(err);
+                console.log(err);
+                res.status(500).send({"error":"Something went wrong"});
             } else {
                 return res.status(200).json({"Succes": `amount has been changed to ${aantal}`});
             }
         });
     }
 
-    static async apiAssignProductToShelf(req, res) {
-        //Een nieuw product aan een schap toewijzen
+    static async getCategories(req, res) {
+        conn.query(sql.getCategories, function (err, result) {
+            if (err) {
+                res.status(500).send({"error":"there was an unexpected error"});
+            } else {
+                res.status(200).json(result);
+            }
+        })
     }
 
 }
