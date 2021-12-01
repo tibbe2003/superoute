@@ -7,7 +7,7 @@ const superroute = require("./controller");
     router.get("/stores", superroute.getAllStores);
     router.get("/stores/:id", superroute.getStoreById);
     router.get("/getAssortiment/:id", superroute.getWinkelAssortiment);
-    router.put("/product/:winkelId/:productId", superroute.editProductDetails);
+    router.put("/product/:storeId/:productId", superroute.editProductDetails);
     router.post("/addProduct/:winkelId", superroute.addNewProduct);
     router.get("/losseProducten/:winkelId", superroute.losseProducten);
     router.get("/losseSchappen/:winkelId", superroute.losseSchappen);
