@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './scan_product.dart';
+import './herkalibratie_lijst.dart';
 import './appbar.dart';
 
 
@@ -13,7 +13,7 @@ class superroute extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: bar(),
-        body: scan_product(),
+        body: herkalibratie(),
       ),
     );
   }
