@@ -33,11 +33,6 @@ class _herkalibratieState extends State<herkalibratie> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
-      width: 100,
-      height: 50,
-      alignment: Alignment.center,
-      color: Colors.blueAccent,
       child: FutureBuilder<List<Data>>(
         future: fetchData(http.Client()),
         builder: (context, snapshot) {
@@ -52,7 +47,7 @@ class _herkalibratieState extends State<herkalibratie> {
           }
         },
       ),
-    ));
+    );
   }
 }
 
@@ -66,7 +61,23 @@ class DataList extends StatelessWidget {
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return Text(data[index].schapLocatie);
+        return Container(
+          width: 100,
+          height: 50,
+          margin: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.blue,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            data[index].schapLocatie,
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.white,
+            ),
+          ),
+        );
       },
     );
   }
