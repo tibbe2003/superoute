@@ -28,8 +28,10 @@ class req_button_state extends State<req_button> {
 
   channelconnect() {
     //function to connect
-      channel = IOWebSocketChannel.connect('ws://192.168.128.29:8000');
+      channel = IOWebSocketChannel.connect('ws://localhost:8000');
       channel.stream.listen((message) {
+
+        print(message);
 
         setState(() {
         var jsondata = json.decode(message);

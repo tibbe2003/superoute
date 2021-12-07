@@ -35,7 +35,7 @@ class _ProductListState extends State<ProductList> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Uitleg()),
+                    MaterialPageRoute(builder: (context) => uitleg()),
                   );
                 }),
             SizedBox(height: 10),
@@ -57,7 +57,7 @@ class _ProductListState extends State<ProductList> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Uitleg()),
+                    MaterialPageRoute(builder: (context) => uitleg()),
                   );
                 }),
             SizedBox(height: 10),
@@ -79,7 +79,7 @@ class _ProductListState extends State<ProductList> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Uitleg()),
+                    MaterialPageRoute(builder: (context) => uitleg()),
                   );
                 })
           ],

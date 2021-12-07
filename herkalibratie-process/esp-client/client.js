@@ -7,7 +7,7 @@ let bericht = "no data yet";
 let client = "unknown";
 let i = 0;
 
-const url = 'ws://192.168.128.29:8000';
+const url = 'ws://localhost:8000';
 const connection = new websocket(url);
 
 connection.onopen = () => {
