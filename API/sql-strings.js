@@ -1,85 +1,96 @@
 module.exports = {
-    getStores: `SELECT winkel.winkelId, winkel.winkelNaam, winkel.winkelAdres, logos.logoUrl 
-                FROM winkel 
-                INNER JOIN logos ON winkel.winkelLogoId=logos.logoId`,
+    getStores: `SELECT store.storeId, store.storeName, store.storeAdress, logos.logoAdress 
+                FROM store 
+                INNER JOIN logos ON store.storeLogoId=logos.logoId`,
 
     getStoreById: function(id) {
-        return `SELECT winkel.winkelId, winkel.winkelNaam, winkel.winkelAdres, logos.logoUrl 
-                FROM winkel 
-                INNER JOIN logos ON winkel.winkelLogoId=logos.logoId 
-                WHERE winkelId = ${id}`;
+        return `SELECT store.storeId, store.storeName, store.storeAdress, logos.logoAdress 
+                FROM store 
+                INNER JOIN logos ON store.storeLogoId=logos.logoId 
+                WHERE storeId = ${id}`;
     },
 
     getStoreAssortiment: function(id) {
-        return `SELECT schap.winkelId, schap.schapId, product.productId, product.productNaam, product.productAantal, product.productPrijs, product.error, product.productFoto, product.productGewicht, categorien.categorieNaam, schap.schapLocatie
-                FROM schap
-                INNER JOIN product ON schap.productId=product.productId
-                INNER JOIN categorien ON schap.categorieId=categorien.categorieId
-                WHERE winkelId = ${id}`;
+        return `SELECT shelf.storeId, shelf.shelfId, product.productId, product.productName, product.productStock, product.productPrice, product.error, product.productPicture, product.productWeight, categories.categoryName, shelf.shelfLocation
+                FROM shelf
+                INNER JOIN product ON shelf.productId=product.productId
+                INNER JOIN categories ON shelf.categoryId=categories.categoryId
+                WHERE storeId = ${id}`;
     },
 
-    updateProductDetails: function(winkelId, productId, productNaam, productPrijs) {
-        if(productNaam == undefined && productPrijs == undefined) {
+    updateProductDetails: function(storeId, productId, productName, productPrice) {
+        if(productName == undefined && productPrice == undefined) {
             return
-        } else if (productNaam == undefined) {
+        } else if (productName == undefined) {
             return `UPDATE product p
-                INNER JOIN schap s ON p.productId=s.productId
-                SET productPrijs = '${productPrijs}'
-                WHERE s.winkelId = ${winkelId} && p.productId = ${productId}`;
-        } else if (productPrijs == undefined) {
+                INNER JOIN shelf s ON p.productId=s.productId
+                SET productPrice = '${productPrice}'
+                WHERE s.storeId = ${storeId} && p.productId = ${productId}`;
+        } else if (productPrice == undefined) {
             return `UPDATE product p
-                INNER JOIN schap s ON p.productId=s.productId
-                SET productNaam = '${productNaam}'
-                WHERE s.winkelId = ${winkelId} && p.productId = ${productId}`;
+                INNER JOIN shelf s ON p.productId=s.productId
+                SET productName = '${productName}'
+                WHERE s.storeId = ${storeId} && p.productId = ${productId}`;
         } else {
             return `UPDATE product p
-                INNER JOIN schap s ON p.productId=s.productId
-                SET productNaam = '${productNaam}', productPrijs = '${productPrijs}'
-                WHERE s.winkelId = ${winkelId} && p.productId = ${productId}`;
+                INNER JOIN shelf s ON p.productId=s.productId
+                SET productName = '${productName}', productPrice = '${productPrice}'
+                WHERE s.storeId = ${storeId} && p.productId = ${productId}`;
         }
     },
 
-    addNewProduct(winkelId, productNaam, productPrijs, productFoto) {
-        return `INSERT INTO product (productNaam, productPrijs, productFoto)
-                VALUES ('${productNaam}','${productPrijs}', '${productFoto}')`;
+    addNewProduct(storeId, productName, productPrice, productPicture) {
+        return `INSERT INTO product (productName, productPrice, productPicture)
+                VALUES ('${productName}','${productPrice}', '${productPicture}')`;
     },
 
-    getLosseProducten(winkelId) {
-        return `SELECT product.*, schap.schapId
+    getLooseProducts(storeId) {
+        return `SELECT product.*, shelf.shelfId
                 FROM product
-                LEFT JOIN schap on product.productId=schap.productId
-                WHERE schapId IS null`
+                LEFT JOIN shelf on product.productId=shelf.productId
+                WHERE shelfId IS null`
     },
 
-    getLosseSchappen(winkelId) {
-        return `SELECT schap.schapId, categorien.categorieNaam, schap.schapLocatie
-                FROM schap
-                INNER JOIN categorien ON schap.categorieId=categorien.categorieId
-                WHERE winkelId = ${winkelId} && productId IS null`
+    getLooseShelfs(storeId) {
+        return `SELECT shelf.shelfId, categories.categoryName, shelf.shelfLocation
+                FROM shelf
+                INNER JOIN categories ON shelf.categoryId=categories.categoryId
+                WHERE storeId = ${storeId} && productId IS null`
     },
 
-    koppelProduct(winkelId, schapId, productId) {
-        return `UPDATE schap
+    linkProduct(storeId, shelfId, productId) {
+        return `UPDATE shelf
                 SET productId = ${productId}
-                WHERE winkelId = ${winkelId} && schapId = ${schapId}`
+                WHERE storeId = ${storeId} && shelfId = ${shelfId}`
     },
 
-    ontkoppelProduct(winkelId, schapId) {
-        return `UPDATE schap
-                SET productId = null
-                WHERE winkelId = ${winkelId} && schapId = ${schapId}`
+    unlinkProduct(storeId, shelfId) {
+        return `UPDATE shelf
+                SET productId = 0
+                WHERE storeId = ${storeId} && shelfId = ${shelfId}`
     },
 
-    productDetails(winkelId, productId) {
+    productDetails(storeId, productId) {
         return `SELECT * from product
                 WHERE productId = ${productId}`
     },
 
-    updateVoorraad(winkelId, productId, aantal) {
+    updateStock(storeId, productId, aantal) {
         return `UPDATE product
-                SET productAantal = '${aantal}'
+                SET productStock = '${aantal}'
                 WHERE productId = ${productId}`
     },
 
-    getCategories: `SELECT * FROM categorien`,
+    getCategories: `SELECT * FROM categories`,
+
+    recalibration(storeId, shelfId) {
+        return `UPDATE shelf
+                SET recalibration = 1
+                WHERE storeId = ${storeId} && shelfId = ${shelfId}`
+    },
+
+    getRecalibration(storeId) {
+        return `SELECT * FROM shelf
+                WHERE storeId = ${storeId} && recalibration = 1`
+    },
 }
