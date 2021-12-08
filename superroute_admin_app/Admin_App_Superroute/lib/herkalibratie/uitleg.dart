@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cool_stepper_reloaded/cool_stepper_reloaded.dart';
-import 'package:im_stepper/main.dart';
-import 'package:im_stepper/stepper.dart';
 
 import '../appbar.dart';
 import '../bottomnav2.dart';
