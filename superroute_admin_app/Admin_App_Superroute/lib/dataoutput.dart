@@ -15,7 +15,7 @@ class output extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Color.fromARGB(255, 220, 228, 255),
+        color: const Color.fromARGB(255, 220, 228, 255),
       ),
       child: Text(
         value,

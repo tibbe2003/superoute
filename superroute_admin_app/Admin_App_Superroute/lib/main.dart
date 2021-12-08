@@ -12,9 +12,9 @@ class superroute extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: bar(),
+        appBar: const bar(),
         body: scan_product(),
-        bottomNavigationBar: btmNav(),
+        bottomNavigationBar: const btmNav(),
       ),
     );
   }

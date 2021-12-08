@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'uitleg.dart';
+import 'stepper.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({Key? key}) : super(key: key);
@@ -17,6 +17,9 @@ class _ProductListState extends State<ProductList> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             InkWell(
                 child: Container(
                     alignment: Alignment(0.0, 0.0),
@@ -33,10 +36,13 @@ class _ProductListState extends State<ProductList> {
                       textAlign: TextAlign.left,
                     )),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => uitleg()),
-                  );
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            stepper(),
+                        transitionDuration: Duration.zero,
+                      ));
                 }),
             SizedBox(height: 10),
             InkWell(
@@ -55,10 +61,13 @@ class _ProductListState extends State<ProductList> {
                       textAlign: TextAlign.left,
                     )),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => uitleg()),
-                  );
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            stepper(),
+                        transitionDuration: Duration.zero,
+                      ));
                 }),
             SizedBox(height: 10),
             InkWell(
@@ -77,10 +86,13 @@ class _ProductListState extends State<ProductList> {
                       textAlign: TextAlign.left,
                     )),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => uitleg()),
-                  );
+                  Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            stepper(),
+                        transitionDuration: Duration.zero,
+                      ));
                 })
           ],
         ),

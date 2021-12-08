@@ -28,10 +28,13 @@ class btmNav extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => superroute()),
-                );
+                Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          superroute(),
+                      transitionDuration: Duration.zero,
+                    ));
               },
               child: const Text(
                 'Scan product',
@@ -49,10 +52,13 @@ class btmNav extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => herkalibratie()),
-                );
+                Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          herkalibratie(),
+                      transitionDuration: Duration.zero,
+                    ));
               },
               child: const Text(
                 'Herkalibratie',

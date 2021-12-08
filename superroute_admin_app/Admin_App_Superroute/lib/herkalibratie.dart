@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:superrouteadminapp/herkalibratie/producten.dart';
-import 'package:superrouteadminapp/herkalibratie/uitleg.dart';
+import 'package:superrouteadminapp/herkalibratie/stepper.dart';
 
 import './bottomnav.dart';
 import './appbar.dart';
