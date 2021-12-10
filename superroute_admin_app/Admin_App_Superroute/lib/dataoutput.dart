@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 class output extends StatelessWidget {
   String value = '';
 
-  void set Value(String input) {
-    value = input;
-  }
+  output(this.value);
 
   @override
   Widget build(BuildContext context) {

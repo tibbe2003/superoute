@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import './titles.dart';
 import './Dataoutput.dart';
+import 'barcode.dart';
 
-class table extends StatelessWidget {
+
+
+class table extends StatefulWidget {
   const table({Key? key}) : super(key: key);
+
+  @override
+  State<table> createState() => _tableState();
+}
+
+class _tableState extends State<table> {
+  late String productId = '0';
+
+  void updateProductId(String productid) {
+    setState(() {
+      productId = productid;
+      print(productId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +32,23 @@ class table extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               titles('Product nummer'),
-              output(),
+              output(productId),
               titles('Product naam'),
-              output(),
+              output(productId),
               titles('Voorraad'),
-              output(),
+              output(productId),
               titles('Categorie'),
-              output(),
+              output(productId),
               titles('Positie'),
-              output(),
+              output(productId),
               titles('Prijs'),
-              output(),
+              output(productId),
               titles('Gewicht'),
-              output(),
+              output(productId),
+              titles(''),
+              Barcode(
+                responseData: updateProductId,
+              ),
             ],
           ),
         ),
