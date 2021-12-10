@@ -14,7 +14,7 @@ class herkalibratie extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
             appBar: const bar(),
-            body: ProductList(),
+            body: productList(),
             bottomNavigationBar: btmNav()));
   }
 }

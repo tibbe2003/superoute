@@ -15,16 +15,17 @@ connection.onopen = () => {
 }
 
 connection.onmessage = e => {
+    console.log(e.data);
     if(IsJsonString(e.data)) {
-        console.log(bericht);
-
         let json = JSON.parse(e.data);
         bericht = json['data'];
         client = json['client'];
-        console.log(e.data);
+    } else {
+        console.log("error");
     }
 
     if(bericht === 'herkalibratie') {
+        i = 0;
         herkalibratie = true;
         schapmodus = false;
         setInterval(function(){
@@ -32,12 +33,18 @@ connection.onmessage = e => {
         },1000)
     } 
     if(bericht == 'finished') {
+        i = 0;
         schapmodus = true;
         herkalibratie = false;
         schap();
     }
-    
-    console.log(bericht);
+    if(bericht == 'latest') {
+        schapmodus = false;
+        herkalibratie = false;
+        bericht = '';
+        console.log(`{"client":"${host_client}", "data":"${i}"}`);
+        connection.send(`{"client":"${host_client}", "data":"${i}"}`);
+    }
 }
 
 function IsJsonString(str) {
@@ -52,8 +59,7 @@ function IsJsonString(str) {
 function herkal() {
     if(herkalibratie === true && schapmodus === false && bericht == 'herkalibratie') {
                 connection.send(`{"client":"${host_client}", "data":"${i}"}`);
-                console.log(bericht);
-                console.log(herkalibratie);
+                console.log(i);
                 i++
     } else {
         connection.send(`{"client":"${host_client}", "data":"schap modus"}`);
@@ -62,8 +68,8 @@ function herkal() {
 
 function schap() {
     if(schapmodus) {
+        i = 0;
         connection.send(`{"client":"${host_client}", "data":"schap modus"}`);
-        console.log(bericht);
     } else {
         bericht = '';
         return;

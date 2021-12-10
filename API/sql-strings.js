@@ -90,7 +90,9 @@ module.exports = {
     },
 
     getRecalibration(storeId) {
-        return `SELECT * FROM shelf
+        return `SELECT shelf.*, product.productName
+                FROM shelf
+                INNER JOIN product ON product.productId = shelf.productId
                 WHERE storeId = ${storeId} && recalibration = 1`
     },
 }

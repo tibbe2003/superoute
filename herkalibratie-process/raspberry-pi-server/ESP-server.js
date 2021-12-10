@@ -31,7 +31,7 @@ websocketServer.on('connection', (webSocketClient) => {
         .forEach( client => {
             if (client !== webSocketClient && client.readyState === WebSocket.OPEN) {
                 //send the client the current message
-                client.send(`{"client":"${clientDevice}":"data":"${data}"}`);
+                client.send(`{"client":"${clientDevice}","data":"${data}"}`);
             }
         });
     });

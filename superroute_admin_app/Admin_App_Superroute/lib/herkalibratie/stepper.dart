@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:cool_stepper_reloaded/cool_stepper_reloaded.dart';
-import 'package:im_stepper/main.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:superrouteadminapp/herkalibratie.dart';
 import 'package:superrouteadminapp/herkalibratie/bevestig.dart';
 import 'package:superrouteadminapp/herkalibratie/succes.dart';
+import 'package:superrouteadminapp/herkalibratie/websockets.dart';
 import 'package:superrouteadminapp/herkalibratie/wegen.dart';
+import 'package:superrouteadminapp/herkalibratie.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 
 import 'uitleg.dart';
 import '../appbar.dart';
 import './producten.dart';
 
+void printId(int id) {
+  print(id);
+}
+
 class stepper extends StatefulWidget {
-  const stepper({Key? key}) : super(key: key);
+  late int schapId;
+  stepper(this.schapId);
 
   @override
   _stepperState createState() => _stepperState();
 }
 
 class _stepperState extends State<stepper> {
+  String weight = "";
   // REQUIRED: USED TO CONTROL THE STEPPER.
   int activeStep = 0; // Initial step set to 0.
 
@@ -27,6 +36,7 @@ class _stepperState extends State<stepper> {
 
   @override
   Widget build(BuildContext context) {
+    printId(widget.schapId);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -35,14 +45,12 @@ class _stepperState extends State<stepper> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              /// Jump buttons.
               Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Center(
-                    child: steps[activeStep],
-                  )),
-
-              // Next and Previous buttons.
+                padding: const EdgeInsets.all(18.0),
+                child: Center(
+                  child: steps[activeStep],
+                ),
+              ),
             ],
           ),
         ),
@@ -89,10 +97,15 @@ class _stepperState extends State<stepper> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      herkalibratie(),
+                  herkalibratie(),
                   transitionDuration: Duration.zero,
                 ));
             activeStep = 0;
+          }
+          if(activeStep == 2) {
+            weight = latestData();
+            print(weight);
+            sendStop();
           }
         },
         label: const Text('verder'),
@@ -109,6 +122,7 @@ class _stepperState extends State<stepper> {
       child: FloatingActionButton.extended(
         heroTag: 'cancelbtn',
         onPressed: () {
+          sendStop();
           /// ACTIVE STEP MUST BE CHECKED FOR (dotCount - 1) AND NOT FOR dotCount To PREVENT Overflow ERROR.
           activeStep = 0;
           Navigator.pushReplacement(

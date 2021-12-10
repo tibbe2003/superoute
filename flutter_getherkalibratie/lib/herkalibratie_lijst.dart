@@ -5,13 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import './json_data.dart';
+import '../../superroute_admin_app/Admin_App_Superroute/lib/herkalibratie/json_data.dart';
 
 //Getting data from api en parsing it with json
 Future<List<Data>> fetchData(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('http://api.superoute.nl:8000/herkalibratie/3'));
+  final response = await http
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    debugPrint("hij doet het");
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
   return compute(parseData, response.body);
 }
 
@@ -30,6 +39,8 @@ class herkalibratie extends StatefulWidget {
 }
 
 class _herkalibratieState extends State<herkalibratie> {
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -71,7 +82,7 @@ class DataList extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            data[index].schapLocatie,
+            data[index].shelfLocation,
             style: TextStyle(
               fontSize: 30,
               color: Colors.white,
