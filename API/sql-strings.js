@@ -1,10 +1,10 @@
 module.exports = {
-    getStores: `SELECT store.storeId, store.storeName, store.storeAdress, logos.logoAdress 
+    getStores: `SELECT store.storeId, store.storeName, store.storeAdres, logos.logoAdres 
                 FROM store 
                 INNER JOIN logos ON store.storeLogoId=logos.logoId`,
 
     getStoreById: function(id) {
-        return `SELECT store.storeId, store.storeName, store.storeAdress, logos.logoAdress 
+        return `SELECT store.storeId, store.storeName, store.storeAdres, logos.logoAdres 
                 FROM store 
                 INNER JOIN logos ON store.storeLogoId=logos.logoId 
                 WHERE storeId = ${id}`;
