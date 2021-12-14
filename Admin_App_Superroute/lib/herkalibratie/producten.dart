@@ -10,8 +10,8 @@ import './json_data.dart';
 
 //Getting data from api en parsing it with json
 Future<List<Data>> fetchData(http.Client client) async {
-  final response = await http
-      .get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
+  final response =
+      await http.get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
 
   return compute(parseData, response.body);
 }
@@ -27,7 +27,7 @@ String parseLocation(String input) {
   List<String> LocationArr = input.split('.');
   String output = "Locatie: ";
 
-  switch(LocationArr[0]) {
+  switch (LocationArr[0]) {
     case '1':
       output += "agf";
       break;
@@ -48,7 +48,12 @@ String parseLocation(String input) {
       break;
   }
 
-  output += ", meter: "+LocationArr[1]+", plank: "+LocationArr[2]+", positie: "+LocationArr[3];
+  output += ", meter: " +
+      LocationArr[1] +
+      ", plank: " +
+      LocationArr[2] +
+      ", positie: " +
+      LocationArr[3];
 
   return output;
 }
@@ -96,8 +101,9 @@ class DataList extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
               child: Container(
+                constraints: BoxConstraints(minHeight: 53),
                 width: 10,
-                height: 53,
+                padding: EdgeInsets.all(5),
                 margin: EdgeInsets.only(top: 30, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
