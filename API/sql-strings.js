@@ -71,8 +71,11 @@ module.exports = {
     },
 
     productDetails(storeId, productId) {
-        return `SELECT * from product
-                WHERE productId = ${productId}`
+        return `SELECT product.productId, product.productName, product.productStock, categories.categoryName, shelf.shelfLocation, product.productPrice, product.productWeight, product.productPrice 
+                FROM shelf
+                INNER JOIN product ON shelf.productId=product.productId
+                INNER JOIN categories ON shelf.categoryId=categories.categoryId
+                WHERE shelfId = ${productId}`;
     },
 
     updateStock(storeId, productId, aantal) {

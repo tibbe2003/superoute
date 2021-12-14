@@ -9,7 +9,6 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-
 import 'uitleg.dart';
 import '../appbar.dart';
 import './producten.dart';
@@ -33,7 +32,6 @@ class _stepperState extends State<stepper> {
 
   // OPTIONAL: can be set directly.
   int dotCount = 5;
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +72,7 @@ class _stepperState extends State<stepper> {
   /// Generates jump steps for dotCount number of steps, and returns them in a row.
   var steps = <Widget>[
     uitleg(),
-    wegen(IOWebSocketChannel.connect('ws://www.superoute.nl')),
+    wegen(IOWebSocketChannel.connect('ws://www.superoute.nl?ID=app')),
     Bevestig(),
     Succes(),
   ];
@@ -98,12 +96,12 @@ class _stepperState extends State<stepper> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                  herkalibratie(),
+                      herkalibratie(),
                   transitionDuration: Duration.zero,
                 ));
             activeStep = 0;
           }
-          if(activeStep == 2) {
+          if (activeStep == 2) {
             print(weight);
           }
         },
@@ -122,6 +120,7 @@ class _stepperState extends State<stepper> {
         heroTag: 'cancelbtn',
         onPressed: () {
           sendStop(IOWebSocketChannel.connect('ws://www.superoute.nl'));
+
           /// ACTIVE STEP MUST BE CHECKED FOR (dotCount - 1) AND NOT FOR dotCount To PREVENT Overflow ERROR.
           activeStep = 0;
           Navigator.pushReplacement(

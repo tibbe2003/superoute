@@ -13,7 +13,7 @@ Future<List<Data>> fetchData(http.Client client) async {
   final response =
       await http.get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
 
-  return compute(parseData, response.body);
+    return compute(parseData, response.body);
 }
 
 //Converting response body to List of type Data

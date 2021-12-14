@@ -18,9 +18,8 @@ const websocketServer = new WebSocket.Server({ server });
 let connectedClients = [];
 
 websocketServer.on('connection', (webSocketClient, req) => {
-    if(!getId(req.url)) webSocketClient.close();
 
-    connectedClients.push({id: getId(req.url), client: webSocketClient});
+    connectedClients.push({id: req.headers["sec-websocket-key"], client: webSocketClient});
     webSocketClient.send('{"connection":"ok"}');
 
     webSocketClient.on('message', (message) => {
@@ -35,6 +34,7 @@ websocketServer.on('connection', (webSocketClient, req) => {
             data = json['data'];
 
         }
+
 
         let Client = connectedClients.find(x => x.id == target);
         if(Client != undefined) Client = Client.client;

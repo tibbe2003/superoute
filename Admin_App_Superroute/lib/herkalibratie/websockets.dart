@@ -5,7 +5,7 @@ import 'dart:convert';
 late String data = '';
 
 sendHerkalibratie(IOWebSocketChannel channel) async {
-  String msg = '{"client":"app","data":"herkalibratie"}';
+  String msg = '{"client":"app","data":"herkalibratie","target":"1"}';
   channel.sink.add(msg);
 }
 
@@ -18,12 +18,10 @@ channelconnect(IOWebSocketChannel channel) {
   //channel = IOWebSocketChannel.connect('ws://192.168.128.16:8000');
 
   channel.stream.listen((message) {
+    var jsondata = json.decode(message);
 
-      var jsondata = json.decode(message);
-
-      if(jsondata != null) {
-        data = jsondata["data"];
-      }
-
+    if (jsondata != null) {
+      data = jsondata["data"];
+    }
   });
 }
