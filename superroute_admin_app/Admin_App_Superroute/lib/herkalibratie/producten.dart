@@ -11,7 +11,7 @@ import './json_data.dart';
 //Getting data from api en parsing it with json
 Future<List<Data>> fetchData(http.Client client) async {
   final response = await http
-      .get(Uri.parse('http://api.superoute.nl:8000/v2/recalibration/1'));
+      .get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
 
   return compute(parseData, response.body);
 }
