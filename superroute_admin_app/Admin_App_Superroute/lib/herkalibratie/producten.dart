@@ -27,7 +27,7 @@ String parseLocation(String input) {
   List<String> LocationArr = input.split('.');
   String output = "Locatie: ";
 
-  switch(LocationArr[0]) {
+  switch (LocationArr[0]) {
     case '1':
       output += "agf";
       break;
@@ -48,7 +48,12 @@ String parseLocation(String input) {
       break;
   }
 
-  output += ", meter: "+LocationArr[1]+", plank: "+LocationArr[2]+", positie: "+LocationArr[3];
+  output += ", meter: " +
+      LocationArr[1] +
+      ", plank: " +
+      LocationArr[2] +
+      ", positie: " +
+      LocationArr[3];
 
   return output;
 }
@@ -95,33 +100,37 @@ class DataList extends StatelessWidget {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-              child: Container(
-                width: 10,
-                height: 53,
-                margin: EdgeInsets.only(top: 30, bottom: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Color.fromARGB(255, 220, 228, 255),
-                ),
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      parseLocation(data[index].shelfLocation),
-                      style: const TextStyle(
-                        fontSize: 17,
-                        color: Colors.black,
+              child: Expanded(
+                child: Container(
+                  constraints: BoxConstraints(
+                    minHeight: 53),
+                  width: 10,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.only(top: 30, bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color.fromARGB(255, 220, 228, 255),
+                  ),
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        parseLocation(data[index].shelfLocation),
+                        style: const TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    Text(
-                      data[index].productName,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black,
+                      Text(
+                        data[index].productName,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               onTap: () {
