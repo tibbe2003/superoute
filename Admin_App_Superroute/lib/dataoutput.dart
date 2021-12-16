@@ -8,9 +8,10 @@ class output extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(minHeight: 40),
       margin: EdgeInsets.only(top: 5, bottom: 10),
+      padding: EdgeInsets.all(5),
       width: double.infinity,
-      height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: const Color.fromARGB(255, 220, 228, 255),
