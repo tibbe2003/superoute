@@ -4,6 +4,8 @@ import 'package:superrouteadminapp/herkalibratie/bevestig.dart';
 import 'package:superrouteadminapp/herkalibratie/succes.dart';
 import 'package:superrouteadminapp/herkalibratie/websockets.dart';
 import 'package:superrouteadminapp/herkalibratie/wegen.dart';
+import 'package:http/http.dart' as http;
+import './websockets.dart';
 import 'package:superrouteadminapp/herkalibratie.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
@@ -18,7 +20,7 @@ void printId(int id) {
 }
 
 class stepper extends StatefulWidget {
-  late int schapId;
+  late String schapId;
   stepper(this.schapId);
 
   @override
@@ -35,7 +37,12 @@ class _stepperState extends State<stepper> {
 
   @override
   Widget build(BuildContext context) {
-    printId(widget.schapId);
+    @override
+    void initState() {
+      super.initState();
+      sendHerkalibratie(IOWebSocketChannel.connect('ws://www.superoute.nl?ID=app'), widget.schapId);
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -119,7 +126,7 @@ class _stepperState extends State<stepper> {
       child: FloatingActionButton.extended(
         heroTag: 'cancelbtn',
         onPressed: () {
-          sendStop(IOWebSocketChannel.connect('ws://www.superoute.nl'));
+          sendStop(IOWebSocketChannel.connect('ws://www.superoute.nl'), widget.schapId);
 
           /// ACTIVE STEP MUST BE CHECKED FOR (dotCount - 1) AND NOT FOR dotCount To PREVENT Overflow ERROR.
           activeStep = 0;

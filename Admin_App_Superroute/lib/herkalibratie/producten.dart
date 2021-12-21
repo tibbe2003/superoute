@@ -6,22 +6,22 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import './stepper.dart';
 
-import './json_data.dart';
+import '../models/herkalibratie_model.dart';
 
-//Getting data from api en parsing it with json
-Future<List<Data>> fetchData(http.Client client) async {
-  final response =
-      await http.get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
+  //Getting data from api en parsing it with json
+  Future<List<Data>> fetchData(http.Client client) async {
+    final response =
+        await http.get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
 
-    return compute(parseData, response.body);
-}
+      return compute(parseData, response.body);
+  }
 
-//Converting response body to List of type Data
-List<Data> parseData(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+  //Converting response body to List of type Data
+  List<Data> parseData(String responseBody) {
+    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Data>((json) => Data.fromJson(json)).toList();
-}
+    return parsed.map<Data>((json) => Data.fromJson(json)).toList();
+  }
 
 String parseLocation(String input) {
   List<String> LocationArr = input.split('.');
@@ -90,7 +90,7 @@ class productListState extends State<productList> {
 class DataList extends StatelessWidget {
   const DataList({Key? key, required this.data}) : super(key: key);
 
-  final List<Data> data;
+    final List<Data> data;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +135,7 @@ class DataList extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) =>
-                          stepper(data[index].shelfId),
+                          stepper(data[index].shelfId.toString()),
                       transitionDuration: Duration.zero,
                     ));
               });

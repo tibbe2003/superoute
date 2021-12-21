@@ -18,8 +18,10 @@ const websocketServer = new WebSocket.Server({ server });
 let connectedClients = [];
 
 websocketServer.on('connection', (webSocketClient, req) => {
+    let senderClient = getId(req.url);
 
-    connectedClients.push({id: req.headers["sec-websocket-key"], client: webSocketClient});
+    connectedClients.push({id: senderClient, client: webSocketClient});
+    console.log("New client connected under the id: "+senderClient);
     webSocketClient.send('{"connection":"ok"}');
 
     webSocketClient.on('message', (message) => {
@@ -35,12 +37,13 @@ websocketServer.on('connection', (webSocketClient, req) => {
 
         }
 
+        console.log(target);
 
         let Client = connectedClients.find(x => x.id == target);
         if(Client != undefined) Client = Client.client;
 
         if(Client != undefined) {
-            Client.send("this is for the client");
+            Client.send(`{"client":"${senderClient}","data":"${data}"}`);
         } else {
             console.log("client is unknown");
         }

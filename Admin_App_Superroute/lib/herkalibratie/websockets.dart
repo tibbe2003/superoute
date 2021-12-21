@@ -4,13 +4,14 @@ import 'dart:convert';
 
 late String data = '';
 
-sendHerkalibratie(IOWebSocketChannel channel) async {
-  String msg = '{"client":"app","data":"herkalibratie","target":"1"}';
+sendHerkalibratie(IOWebSocketChannel channel, String id) async {
+  print("Sending herkalibratie to ${id}");
+  String msg = '{"client":"app","data":"herkalibratie","target":"${id}"}';
   channel.sink.add(msg);
 }
 
-sendStop(IOWebSocketChannel channel) async {
-  String msg = '{"client":"app","data":"schap"}';
+sendStop(IOWebSocketChannel channel, String id) async {
+  String msg = '{"client":"app","data":"schap","target":"${id}"}';
   channel.sink.add(msg);
 }
 

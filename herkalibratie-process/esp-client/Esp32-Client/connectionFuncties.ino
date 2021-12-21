@@ -4,8 +4,8 @@ String ESPID = "1";
 
 void connectWifi() {
   // Connect to wifi
-  WiFi.begin("Thijmenland", "Tvr1eK0Y2ruSqdFSgb7x");
-  //WiFi.begin("laptop_thijmen", "12345678");
+  //WiFi.begin("Thijmenland", "Tvr1eK0Y2ruSqdFSgb7x");
+  WiFi.begin("laptop_thijmen", "12345678");
 
   // Wait some time to connect to wifi
   for (int i = 0; i < 10 && WiFi.status() != WL_CONNECTED; i++) 
@@ -30,9 +30,9 @@ void connectWifi() {
 //connect to websocket ------------------------------------------
 
 void connectSocket() {
-  String server = "ws://www.superoute.nl?ID=ESP1";
+  String server = "www.superoute.nl";
   int port = 80;
-  String path = "/";
+  String path = "/?ID=ESP1  ";
 
   Serial.print("Connecting to WebSockets Server @");
   Serial.println(server);
@@ -41,13 +41,11 @@ void connectSocket() {
   client.onEvent(onEventsCallback);
   
   // try to connect to Websockets server
-  bool connected = client.connect("ws://www.superoute.nl?ID=1");
+  bool connected = client.connect(server, port, path);
   
   if (connected) 
   {
     Serial.println("Connected!");
-    String initial="{\"client\":\"ESP32\",\"data\":\"initial_connection\"}";
-    client.send(initial);
   } 
   else 
   {

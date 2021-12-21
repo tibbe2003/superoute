@@ -70,12 +70,18 @@ module.exports = {
                 WHERE storeId = ${storeId} && shelfId = ${shelfId}`
     },
 
+    //Wanneer gekoppeld aan een schap
     productDetails(storeId, productId) {
         return `SELECT product.productId, product.productName, product.productStock, categories.categoryName, shelf.shelfLocation, product.productPrice, product.productWeight, product.productPrice 
                 FROM shelf
                 INNER JOIN product ON shelf.productId=product.productId
                 INNER JOIN categories ON shelf.categoryId=categories.categoryId
                 WHERE shelfId = ${productId}`;
+    },
+
+    //Wanneer niet gekoppeld aan schap
+    productDetail(storeId, productId) {
+        return `SELECT * FROM product WHERE productId = ${productId}`;
     },
 
     updateStock(storeId, productId, aantal) {

@@ -56,7 +56,7 @@ void loop()
   }
   
   if(stand == "schap") {
-    client.send("{\"client\":\"ESP32\",\"data\":\"Schap modus\"}");
+    client.send("{\"client\":\"ESP32\",\"data\":\"Schap modus\",\"target\":\"app\"}");
     counter = 0;
     stand = "";
   } else if (stand == "herkal") {

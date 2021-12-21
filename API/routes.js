@@ -27,13 +27,14 @@ const superroute = require("./controller");
     router.post("/v2/addProduct/:winkelId", superroute.addNewProduct);
     router.get("/v2/looseProducts/:storeId", superroute.looseProducts);
     router.get("/v2/looseShelfs/:storeId", superroute.looseShelfs);
-    router.post("/v2/linkProdut/:storeId", superroute.linkProduct);
+    router.post("/v2/linkProduct/:storeId", superroute.linkProduct);
     router.delete("/v2/linkProduct/:storeId/:shelfId", superroute.unlinkProduct);
     router.get("/v2/product/:storeId/:productId", superroute.getProductById);
     router.put("/v2/updateStock/:storeId/:productId", superroute.updateProductAmount);
     router.get("/v2/categories", superroute.getCategories);
     router.put("/v2/recalibration/:storeId/:shelfId", superroute.recalibration);
     router.get("/v2/recalibration/:storeId", superroute.getRecalibration);
+    router.get("/v2/getProductDetails/:storeId/:productId", superroute.getProductDetail);
 //#endregion
 
 module.exports = router;

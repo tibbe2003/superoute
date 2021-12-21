@@ -300,7 +300,7 @@ static async looseShelfs(req, res){
 static async linkProduct(req, res) {
     let storeId = req.params.storeId;
 
-    let shelfId = req.body.shelfIdId;
+    let shelfId = req.body.shelfId;
     let productId = req.body.productId;
 
     conn.query(sql.linkProduct(storeId, shelfId, productId), function (err, result) {
@@ -386,6 +386,19 @@ static async getRecalibration(req, res) {
 
     conn.query(sql.getRecalibration(storeId), function (err, result) {
         if (err) {
+            res.status(500).send({"error":"there was an unexpected error"});
+        } else {
+            res.status(200).json(result);
+        }
+    })
+}
+
+static async getProductDetail(req, res) {
+    let storeId = req.params.storeId;
+    let productId = req.params.productId;
+
+    conn.query(sql.productDetail(storeId, productId), function (err, result) {
+        if(err) {
             res.status(500).send({"error":"there was an unexpected error"});
         } else {
             res.status(200).json(result);
