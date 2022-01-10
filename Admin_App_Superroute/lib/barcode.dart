@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:superrouteadminapp/herkalibratie/wegen.dart';
+
+import 'herkalibratie/herkal2/gescanned.dart';
 
 typedef void IntCallback(int id);
 
@@ -26,10 +27,10 @@ class Barcode extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: Color.fromARGB(255, 20, 39, 155)),
-        child: Center(
+        child: const Center(
           child: Text(
             'Scan Barcode',
-            style: const TextStyle(fontSize: 20, color: Colors.white),
+            style: TextStyle(fontSize: 20, color: Colors.white),
             textAlign: TextAlign.left,
           ),
         ),

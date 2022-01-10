@@ -48,14 +48,14 @@ module.exports = {
         return `SELECT product.*, shelf.shelfId
                 FROM product
                 LEFT JOIN shelf on product.productId=shelf.productId
-                WHERE shelfId IS null`
+                WHERE shelfId = 0`
     },
 
     getLooseShelfs(storeId) {
         return `SELECT shelf.shelfId, categories.categoryName, shelf.shelfLocation
                 FROM shelf
                 INNER JOIN categories ON shelf.categoryId=categories.categoryId
-                WHERE storeId = ${storeId} && productId IS null`
+                WHERE storeId = ${storeId} && productId = 0`
     },
 
     linkProduct(storeId, shelfId, productId) {
@@ -68,7 +68,7 @@ module.exports = {
         return `UPDATE shelf
                 SET productId = 0
                 WHERE storeId = ${storeId} && shelfId = ${shelfId}`
-    },
+        },
 
     //Wanneer gekoppeld aan een schap
     productDetails(storeId, productId) {

@@ -4,26 +4,27 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import './stepper.dart';
+import 'package:superrouteadminapp/herkalibratie/herkal2/stepper2.dart';
 
-import '../models/herkalibratie_model.dart';
+import './json_data.dart';
 
-  //Getting data from api en parsing it with json
-  Future<List<Data>> fetchData(http.Client client) async {
-    final response =
-        await http.get(Uri.parse('http://api.superoute.nl/v2/recalibration/1'));
+//Getting data from api en parsing it with json
+Future<List<Data>> fetchData() async {
+  final response =
+      await http.get(Uri.parse('http://api.superoute.nl/v2/looseShelfs/1'));
 
-      return compute(parseData, response.body);
-  }
+  return compute(parseData, response.body);
+}
 
-  //Converting response body to List of type Data
-  List<Data> parseData(String responseBody) {
-    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+//Converting response body to List of type Data
+List<Data> parseData(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-    return parsed.map<Data>((json) => Data.fromJson(json)).toList();
-  }
+  return parsed.map<Data>((json) => Data.fromJson(json)).toList();
+}
 
 String parseLocation(String input) {
+  // ignore: non_constant_identifier_names
   List<String> LocationArr = input.split('.');
   String output = "Locatie: ";
 
@@ -70,7 +71,7 @@ class productListState extends State<productList> {
   Widget build(BuildContext context) {
     return Center(
       child: FutureBuilder<List<Data>>(
-        future: fetchData(http.Client()),
+        future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('${snapshot.error}');
@@ -90,24 +91,25 @@ class productListState extends State<productList> {
 class DataList extends StatelessWidget {
   const DataList({Key? key, required this.data}) : super(key: key);
 
-    final List<Data> data;
+  final List<Data> data;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: Theme.of(context).textTheme.headline4!.fontSize! * 3 + 250,
+      height: 550,
       child: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
           return GestureDetector(
               child: Container(
-                constraints: BoxConstraints(minHeight: 53),
+                constraints: const BoxConstraints(minHeight: 53),
                 width: 10,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(top: 30, bottom: 10),
+                padding: const EdgeInsets.all(5),
+                margin: const EdgeInsets.only(top: 22, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Color.fromARGB(255, 220, 228, 255),
+                  color: const Color.fromARGB(255, 220, 228, 255),
                 ),
                 alignment: Alignment.center,
                 child: Column(
@@ -121,7 +123,7 @@ class DataList extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      data[index].productName,
+                      data[index].shelfId.toString(),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.black,
@@ -135,7 +137,8 @@ class DataList extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) =>
-                          stepper(data[index].shelfId.toString()),
+                          stepper2(parseLocation(data[index].shelfLocation),
+                              data[index].shelfId.toString()),
                       transitionDuration: Duration.zero,
                     ));
               });
