@@ -1,4 +1,4 @@
-# thijmen_zuigt
+# Flutter admin app
 
 A new Flutter project.
 
