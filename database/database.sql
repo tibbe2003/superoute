@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS winkel, logos, categorien, schap, product CASCADE;
 CREATE TABLE logos (
 
     logoId INT NOT NULL AUTO_INCREMENT,
-    logoAdress VARCHAR(255),
+    logoAdres VARCHAR(255),
     logoName VARCHAR(255),
 
     PRIMARY KEY(logoId)
@@ -18,7 +18,7 @@ CREATE TABLE store (
 
     storeId INT NOT NULL AUTO_INCREMENT,
     storeName varchar(255),
-    storeAdress VARCHAR(255),
+    storeAdres VARCHAR(255),
     storeLogoId INT,
 
     PRIMARY KEY(storeId),
